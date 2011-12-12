@@ -27,7 +27,7 @@ Javascript is a pretty nice language.  If you look at my repos, you can probably
         })
     }
 
-Okay, so it's a bit ugly.  We can do the same thing more prettily with Object.create, but the root problem is the same: *instances of Game don't have their own 'object' property*.  Therefore, this will break:
+The major problem with this is *instances of Game don't have their own 'object' property*. You can't use more than one instance of Game without running into serious issues:
 
     var game_a = new Game,
         game_b = new Game
@@ -36,13 +36,13 @@ Okay, so it's a bit ugly.  We can do the same thing more prettily with Object.cr
     game_b.add({owner: "b"})
 
     console.log(game_a.objects) // [{owner: "a"}, {owner: "b"}], *NOT* what we want
+    console.log(game_a.objects) // [{owner: "a"}, {owner: "b"}], *NOT* what we want
 
-Anew is a lib designed to make specifying per-instance variables easy, and inheritable.
+Anew is a lib designed to make specifying per-instance properties easy, and inheritable.
 
+## API
 
-## How?
-
-Anew works rather like Object.create, except for the fact that it 'walks' up the prototype tree and applies all init methods from the 'oldest' ancestor to the newest to the returned object.  It also takes a second param, which specifies the properties for the new object. That means we can re-write that badboy up there like so:
+To show, rather than tell:
 
     var object_manager = {
         init: function(){
@@ -58,7 +58,10 @@ Anew works rather like Object.create, except for the fact that it 'walks' up the
             this.objects.forEach(function(object){
                 if ( object.update ) object.update()
             })
-        })
+        }
+    })
+
+Now, our example from above will work correctly:
 
     var game_a = anew(game),
         game_b = anew(game)
@@ -69,6 +72,10 @@ Anew works rather like Object.create, except for the fact that it 'walks' up the
     console.log(game_a.objects) //  [{owner: "a"}]
     console.log(game_b.objects) //  [{owner: "b"}]
 
+
+## How
+
+Anew works rather like Object.create, except for the fact that it 'walks' up the prototype tree and applies all init methods from the 'oldest' ancestor to the newest to the returned object.  It also takes a second param, which specifies the properties for the new object. That means we can re-write that badboy up there like so:
 
 ## Compatibility
 
