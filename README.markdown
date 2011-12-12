@@ -57,7 +57,14 @@ properties are to be defined, e.g.:
     })
 
     // obj === {init: function(){ this.x = 3  }, x: 3}
- 
+
+Init methods *anywhere* in the prototype chain will take precedence over regular object variables:
+
+    var parent = {init: function(){ this.x = 2}},
+        child = anew(parent, {x: 3})
+
+    // child = {x: 2}
+
 ### inheriting per-instance variables
 
 Inheritance in OOP works on the basis that, in the inheriting object, the 'sub' overwrites the 'super' (be it an object or class).  In the same spirit, anew will apply each init method in the prototype chain from the oldest to the newest to the return object.  The implication of this is:

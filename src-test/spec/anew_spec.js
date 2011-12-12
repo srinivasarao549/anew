@@ -1,29 +1,5 @@
 describe("anew", function(){
 
-    describe("Object create", function(){
-    
-        // don't run the tests of Object.create isn't supported 
-       // if ( !Object.create ) return 
-
-        it("must create new object, then call init methods in order", function(){
-            var proto_a = {init: function(){ this.x =1 }},
-                proto_b, proto_c, object
-            
-            proto_b = Object.create(proto_a)
-            proto_b.init = function(){ this.x = 2 }
-            
-            proto_c = Object.create(proto_b)
-            proto_c.init = function(){ this.x = 3 }
-        
-            object = anew(proto_c)
-
-            expect(object.x).toEqual(3)
-            // proto_c should not be changed
-            expect(proto_c.x).toEqual(undefined)
-        })
-   
-    })
-
     describe("examples", function(){
 
         it("init methods as constructors", function(){
@@ -47,7 +23,14 @@ describe("anew", function(){
             expect(kid.init).toBe(dad.init)
         })
     
-         
+        it("init takes precedence over mixin object", function(){
+            
+            var parent = {init: function(){ this.x = 2}},
+                child = anew(parent, {x: 3})
+
+            expect(child.x).toEqual(2)
+        })
+
         it("main example", function(){
         
             var object_manager = {
