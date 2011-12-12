@@ -13,7 +13,7 @@ Javascript is a pretty nice language.  If you look at my repos, you can probably
     })
 
     /*  To use this in a game, we'd like to be able to update
-        all of our object from a method in our game object.
+        all of our objects from a method in our game object.
     */
     function Game(){}
     Game.prototype = new ObjectManager
@@ -25,7 +25,7 @@ Javascript is a pretty nice language.  If you look at my repos, you can probably
         })
     }
 
-The major problem with this is *instances of Game don't have their own 'object' property*. You can't use more than one instance of Game without running into serious issues:
+The major problem with this is *instances of Game don't have their own 'objects' property*. You can't use more than one instance of Game without running into serious issues:
 
     var game_a = new Game,
         game_b = new Game
@@ -47,7 +47,7 @@ Anew is a single function, w/ a similar signature to Object.create:
 
 ### init methods as constructors
 
-Anew considers that object's init methods should act like a constructor.  This is the method where all per-instance
+Anew assumes that 'init' methods should act like constructors.  This is where all per-instance
 properties are to be defined, e.g.:
 
     var obj = anew(null, {
@@ -60,7 +60,7 @@ properties are to be defined, e.g.:
  
 ### inheriting per-instance variables
 
-All inheritance in OOP (that I know of, at least), works on the basis the 'sub' overwrites the 'super' (be it an object or class).  In the same spirit, anew will apply each init method in the prototype chain from the oldest to the newest to the return object.  The implication of this is:
+Inheritance in OOP works on the basis that, in the inheriting object, the 'sub' overwrites the 'super' (be it an object or class).  In the same spirit, anew will apply each init method in the prototype chain from the oldest to the newest to the return object.  The implication of this is:
 
     var gramps = {init: function(){ this.x = 1}},
         dad = anew(gramps, {init: function(){ this.x = 2}}),
@@ -101,12 +101,10 @@ Now, our example from above will work correctly:
     console.log(game_b.objects) //  [{owner: "b"}]
 
 
-You can find this as a test case in src-test/.
-
 ## Compatibility
 
 At the moment, ES5 compatibility is assumed - no shims are used.
 
 ## Testing
 
-[click here to run tests](http://hughfdjackson.github.com/anew/src-test/SpecRunner.html)
+All of the examples shown have been tested.  [click here to run tests](http://hughfdjackson.github.com/anew/src-test/SpecRunner.html)
