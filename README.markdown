@@ -103,7 +103,14 @@ Now, our example from above will work correctly:
 
 ## Compatibility
 
-At the moment, ES5 compatibility is assumed - no shims are used.
+The library itself is based on ES5 functionality.  However, if you include [es5-shim](https://github.com/kriskowal/es5-shim), you can get the following compatibility (at least):
+
+ * ie 6+
+ * safari 5 + 
+ * chrome 13 + 
+ * firefox 5 + 
+
+It's very likely there's even better compatibility - feel free to run the tests (which include es5-shim by default) below, and notify me of any other browsers I need to add to the list.
 
 ## Testing
 
