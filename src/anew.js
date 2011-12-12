@@ -3,7 +3,6 @@ void function(init){
     var get_proto = Object.getPrototypeOf,
         anew = function(proto, object){
             
-         
             function mixin_object(to, from){
                 
                 Object.keys(from).forEach(function(key){
