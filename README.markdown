@@ -42,7 +42,7 @@ Anew is a lib designed to make specifying per-instance variables easy, and inher
 
 ## How?
 
-Anew works just like Object.create (minus support for the second param), except for the fact that it 'walks' up the prototype tree and applies all init methods from the 'oldest' ancestor to the newest to the returned object.  That means we can re-write that badboy like so:
+Anew works rather like Object.create, except for the fact that it 'walks' up the prototype tree and applies all init methods from the 'oldest' ancestor to the newest to the returned object.  It also takes a second param, which specifies the properties for the new object. That means we can re-write that badboy up there like so:
 
     var object_manager = {
         init: function(){
@@ -68,6 +68,7 @@ Anew works just like Object.create (minus support for the second param), except 
 
     console.log(game_a.objects) //  [{owner: "a"}]
     console.log(game_b.objects) //  [{owner: "b"}]
+
 
 ## Compatibility
 
