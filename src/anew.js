@@ -12,13 +12,13 @@ void function(init){
             }
             
             function call_proto_inits(object, proto){
-
-                // in case proto is undefined
-                if ( !proto ) proto = get_proto(object)
                 
                 // if we've reached the top of the stack, return
                 if ( proto === Object.prototype ) return
-                
+
+                // in case proto is undefined
+                if ( !proto ) proto = get_proto(object)
+                             
                 // recurse
                 call_proto_inits(object, get_proto(proto)) 
                 
