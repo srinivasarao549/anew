@@ -1,7 +1,8 @@
 void function(init){
 
-    var get_proto = Object.getPrototypeOf,
-        anew = function(proto, object){
+    var get_proto = Object.getPrototypeOf
+        
+        function anew(proto, object){
             
             function mixin_object(to, from){
                 
