@@ -1,4 +1,4 @@
-# Anew - what (or why) is it?
+# Anew - Why do we need more Object creation sugar?
 
 Javascript is a pretty nice language.  If you look at my repos, you can probably tell I like it quite a lot.  I have only *one* major gripe with the inheritance system.  Consider:
 
@@ -12,16 +12,14 @@ Javascript is a pretty nice language.  If you look at my repos, you can probably
         }
     })
 
-    /*  To use this in a game, we might consider the generic 'objects'
-        above to be 'entities' in our game.  We'd like to be able to update
-        all of our entities from a method in our game object, since it's 
-        the one in control.  (This is a pattern I actually use *a lot*)
+    /*  To use this in a game, we'd like to be able to update
+        all of our object from a method in our game object.
     */
     function Game(){}
     Game.prototype = new ObjectManager
     
     // if an object in the Game has an update function, call it
-    Game.prototype.update_entities = function(){
+    Game.prototype.update_objects = function(){
         this.objects.forEach(function(object){
             if ( object.update ) object.update()
         })
@@ -36,13 +34,43 @@ The major problem with this is *instances of Game don't have their own 'object' 
     game_b.add({owner: "b"})
 
     console.log(game_a.objects) // [{owner: "a"}, {owner: "b"}], *NOT* what we want
-    console.log(game_a.objects) // [{owner: "a"}, {owner: "b"}], *NOT* what we want
-
-Anew is a lib designed to make specifying per-instance properties easy, and inheritable.
+    console.log(game_b.objects) // [{owner: "a"}, {owner: "b"}], *NOT* what we want
 
 ## API
 
-To show, rather than tell:
+### Signature
+
+Anew is a single function, w/ a similar signature to Object.create:
+
+    function anew(proto, object) // -> object 
+                                 // where object[[prototype]] == proto
+
+### init methods as constructors
+
+Anew considers that object's init methods should act like a constructor.  This is the method where all per-instance
+properties are to be defined, e.g.:
+
+    var obj = anew(null, {
+        init: function(){
+            this.x = 3   
+        }
+    })
+
+    // obj === {init: function(){ this.x = 3  }, x: 3}
+ 
+### inheriting per-instance variables
+
+All inheritance in OOP (that I know of, at least), works on the basis the 'sub' overwrites the 'super' (be it an object or class).  In the same spirit, anew will apply each init method in the prototype chain from the oldest to the newest to the return object.  The implication of this is:
+
+    var proto = {init: function(){ this.x = 1}, x: 2},
+        obj = anew(proto)
+
+    // obj.x === 1
+    // proto.x === 2 (although it would === 2, had we used anew there also)
+
+### Final example
+
+If we use this to 'correct' the buggy example in the intro, it'd look like this:
 
     var object_manager = {
         init: function(){
@@ -73,9 +101,7 @@ Now, our example from above will work correctly:
     console.log(game_b.objects) //  [{owner: "b"}]
 
 
-## How
-
-Anew works rather like Object.create, except for the fact that it 'walks' up the prototype tree and applies all init methods from the 'oldest' ancestor to the newest to the returned object.  It also takes a second param, which specifies the properties for the new object. That means we can re-write that badboy up there like so:
+You can find this as a test case in src-test/.
 
 ## Compatibility
 

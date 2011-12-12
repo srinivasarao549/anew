@@ -1,7 +1,7 @@
 void function(){
+
     // conveniences
     var get_proto = Object.getPrototypeOf,
-
     
     // main func
         anew = function(proto, object){
