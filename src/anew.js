@@ -1,4 +1,4 @@
-void function(){
+void function(init){
 
     var get_proto = Object.getPrototypeOf,
         anew = function(proto, object){
@@ -20,7 +20,7 @@ void function(){
                 if ( !proto ) proto = get_proto(object)
                 
                 // apply
-                if ( proto.init ) proto.init.apply(object)
+                if ( proto[init] ) proto[init].apply(object)
 
                 // if we've reached the top of the stack, return
                 if ( proto === Object.prototype ) return
@@ -38,7 +38,7 @@ void function(){
             mixin_object(new_object, object)
 
             // call init that's been mixed in, if any
-            if ( new_object.init ) new_object.init()
+            if ( new_object[init] ) new_object[init]()
             
             return new_object
         }
@@ -46,4 +46,4 @@ void function(){
     // export
     window["anew"] = anew
 
-}()
+}("init")
