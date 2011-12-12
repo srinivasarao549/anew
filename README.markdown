@@ -35,11 +35,36 @@ Okay, so it's a bit ugly.  We can do the same thing more prettily with Object.cr
     game_a.add({owner: "a"})
     game_b.add({owner: "b"})
 
-    console.log(game_a.objects) // This returns [{owner: "a"}, {owner: "b"}], *NOT* what we want
+    console.log(game_a.objects) // [{owner: "a"}, {owner: "b"}], *NOT* what we want
 
 Anew is a lib designed to make specifying per-instance variables easy, and inheritable.
 
 
 ## How?
 
-Erm, get back to you on that.  Anew is a work in progress.
+Anew works just like Object.create (minus support for the second param), except for the fact that it 'walks' up the prototype tree and applies all init methods from the 'oldest' ancestor to the newest to the returned object.  That means we can re-write that badboy like so:
+
+    var object_manager = {
+        init: function(){
+            this.objects = []
+        },
+        add: function(object){
+            this.objects.push(object)   
+        }
+    }
+
+    var game = anew(object_manager, {
+        update: function(){
+            this.objects.forEach(function(object){
+                if ( object.update ) object.update()
+            })
+        })
+
+    var game_a = anew(game),
+        game_b = anew(game)
+
+    game_a.add({owner: "a"})
+    game_b.add({owner: "b"})
+
+    console.log(game_a.objects) //  [{owner: "a"}]
+    console.log(game_b.objects) //  [{owner: "b"}]
