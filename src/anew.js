@@ -3,7 +3,7 @@ void function(init){
     var get_proto = Object.getPrototypeOf,
         anew = function(proto, object){
             
-            !function set_defaults(){
+            void function set_defaults(){
                 if ( proto === undefined ) proto = {}
                 if ( object === undefined ) object = {}
             }()
