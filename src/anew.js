@@ -10,8 +10,8 @@ void function(){
 
             function mixin_object(to, from){
                 if ( !from ) return 
-                Object.keys(from).forEach(function(key, val){
-                    to[key] = val
+                Object.keys(from).forEach(function(key){
+                    to[key] = from[key]
                 })
             }
             
@@ -24,7 +24,7 @@ void function(){
             
             call_proto_inits(new_object)
             mixin_object(new_object, object)
-            new_object.init()
+            if ( new_object.init ) new_object.init()
             return new_object
         }
     

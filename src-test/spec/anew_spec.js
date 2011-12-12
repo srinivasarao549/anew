@@ -50,6 +50,22 @@ describe("anew", function(){
             expect(game_a.objects).toEqual([{owner: "a"}])
             expect(game_b.objects).toEqual([{owner: "b"}])
         })
+
+
+    })
+
+    describe("examples", function(){
+    
+    
+        it("inheritence", function(){
+        
+            var gramps = {init: function(){ this.x = 1}},
+                dad = anew(gramps, {init: function(){ this.x = 2}}),
+                kid = anew(dad)
+
+            console.log(gramps, dad, kid)
+            expect(kid.x).toEqual(2)
+        })
     })
 
 })

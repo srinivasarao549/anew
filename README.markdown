@@ -62,11 +62,11 @@ properties are to be defined, e.g.:
 
 All inheritance in OOP (that I know of, at least), works on the basis the 'sub' overwrites the 'super' (be it an object or class).  In the same spirit, anew will apply each init method in the prototype chain from the oldest to the newest to the return object.  The implication of this is:
 
-    var proto = {init: function(){ this.x = 1}, x: 2},
-        obj = anew(proto)
+    var gramps = {init: function(){ this.x = 1}},
+        dad = anew(gramps, {init: function(){ this.x = 2}}),
+        kid = anew(dad)
 
-    // obj.x === 1
-    // proto.x === 2 (although it would === 2, had we used anew there also)
+    // kid.x === 2
 
 ### Final example
 
