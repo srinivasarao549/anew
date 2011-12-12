@@ -68,3 +68,11 @@ Anew works just like Object.create (minus support for the second param), except 
 
     console.log(game_a.objects) //  [{owner: "a"}]
     console.log(game_b.objects) //  [{owner: "b"}]
+
+## Compatibility
+
+At the moment, ES5 compatibility is assumed - no shims are used.
+
+## Testing
+
+[click here to run tests](http://hughfdjackson.github.com/anew/src-test/SpecRunner.html)
