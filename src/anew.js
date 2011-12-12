@@ -3,15 +3,16 @@ void function(init){
     var get_proto = Object.getPrototypeOf,
         anew = function(proto, object){
             
-            
+            !function set_up(){
+                if ( proto === undefined ) proto = {}
+                if ( object === undefined ) object = {}
+            }()
+
             function mixin_object(to, from){
-                // in case from is undefined
-                if ( !from ) return 
-                
-                // mixin
                 Object.keys(from).forEach(function(key){
                     to[key] = from[key]
                 })
+
             }
             
             function call_proto_inits(object, proto){
@@ -30,6 +31,7 @@ void function(init){
 
             }
             
+
             var new_object = Object.create(proto)
             
             // mixin extra props
