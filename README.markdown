@@ -33,8 +33,11 @@ The major problem with this is *instances of Game don't have their own 'objects'
     game_a.add({owner: "a"})
     game_b.add({owner: "b"})
 
-    console.log(game_a.objects) // [{owner: "a"}, {owner: "b"}], *NOT* what we want
-    console.log(game_b.objects) // [{owner: "a"}, {owner: "b"}], *NOT* what we want
+    // both objects are mofidying the prototype
+    // which is *not* what we'd like:
+
+    // game_a.objects => [{owner: "a"}, {owner: "b"}]
+    // game_b.objects => [{owner: "a"}, {owner: "b"}]
 
 ## API
 
@@ -56,14 +59,14 @@ properties are to be defined, e.g.:
         }
     })
 
-    // obj === {init: function(){ this.x = 3  }, x: 3}
+    // obj => {init: function(){ this.x = 3  }, x: 3}
 
 Init methods *anywhere* in the prototype chain will take precedence over regular object properties:
 
     var parent = {init: function(){ this.x = 2}},
         child = anew(parent, {x: 3})
 
-    // child = {x: 2}
+    // child => {x: 2}
 
 ### inheriting per-instance variables
 
@@ -73,7 +76,7 @@ Inheritance in OOP works on the basis that, in the inheriting object, the 'sub' 
         dad = anew(gramps, {init: function(){ this.likes = "golf"}}),
         kid = anew(dad)
     
-    // kid.likes = "golf" 
+    // kid.likes == "golf" 
 
 ### Final example
 
@@ -104,8 +107,8 @@ Now, our example from above will work correctly:
     game_a.add({owner: "a"})
     game_b.add({owner: "b"})
 
-    console.log(game_a.objects) //  [{owner: "a"}]
-    console.log(game_b.objects) //  [{owner: "b"}]
+    // game_a.objects => [{owner: "a"}]
+    // game_b.objects => [{owner: "b"}]
 
 
 ## Compatibility
