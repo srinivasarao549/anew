@@ -25,7 +25,7 @@ void function(init){
                 // recurse
                 call_proto_inits(object, get_proto(proto)) 
                 
-                // apply
+                // apply while falling from stack 
                 if ( proto[init] ) proto[init].apply(object)
 
             }
@@ -38,7 +38,7 @@ void function(init){
             // call all inits in prototype
             if ( proto instanceof Object ) call_proto_inits(new_object)
            
-            // call init that's been mixed in, if any
+            // call init that's been mixed in, if any (call in case of null proto)
             if ( {}.hasOwnProperty.call(new_object, init) ) new_object[init]()
             
             return new_object
