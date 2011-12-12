@@ -21,8 +21,34 @@ describe("anew", function(){
             // proto_c should not be changed
             expect(proto_c.x).toEqual(undefined)
         })
+   
+    })
+
+    describe("examples", function(){
+
+        it("init methods as constructors", function(){
+        
+            var obj = anew(null, {
+                init: function(){
+                    this.x = 3   
+                }
+            })
+            
+            expect(obj.x).toEqual(3)
+        })
+
+        it("inheritence", function(){
+        
+            var gramps = {init: function(){ this.x = 1}},
+                dad = anew(gramps, {init: function(){ this.x = 2}}),
+                kid = anew(dad)
+
+            expect(kid.x).toEqual(2)
+            expect(kid.init.toString()).toEqual(function(){ this.x = 2}.toString()) // not sure about this line..
+        })
     
-        it("must be able to handle example on front page", function(){
+         
+        it("main example", function(){
         
             var object_manager = {
                 init: function(){
@@ -52,20 +78,6 @@ describe("anew", function(){
         })
 
 
-    })
-
-    describe("examples", function(){
-    
-    
-        it("inheritence", function(){
-        
-            var gramps = {init: function(){ this.x = 1}},
-                dad = anew(gramps, {init: function(){ this.x = 2}}),
-                kid = anew(dad)
-
-            console.log(gramps, dad, kid)
-            expect(kid.x).toEqual(2)
-        })
     })
 
 })
