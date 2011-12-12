@@ -39,12 +39,12 @@ describe("anew", function(){
 
         it("inheritence", function(){
         
-            var gramps = {init: function(){ this.x = 1}},
-                dad = anew(gramps, {init: function(){ this.x = 2}}),
+            var gramps = {init: function(){ this.likes = "bridge"}},
+                dad = anew(gramps, {init: function(){ this.likes = "golf"}}),
                 kid = anew(dad)
 
-            expect(kid.x).toEqual(2)
-            expect(kid.init.toString()).toEqual(function(){ this.x = 2}.toString()) // not sure about this line..
+            expect(kid.likes).toEqual("golf")
+            expect(kid.init).toBe(dad.init)
         })
     
          
