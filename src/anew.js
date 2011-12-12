@@ -5,6 +5,7 @@ void function(init){
             
          
             function mixin_object(to, from){
+                
                 Object.keys(from).forEach(function(key){
                     to[key] = from[key]
                 })
