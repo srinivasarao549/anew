@@ -58,7 +58,7 @@ properties are to be defined, e.g.:
 
     // obj === {init: function(){ this.x = 3  }, x: 3}
 
-Init methods *anywhere* in the prototype chain will take precedence over regular object variables:
+Init methods *anywhere* in the prototype chain will take precedence over regular object properties:
 
     var parent = {init: function(){ this.x = 2}},
         child = anew(parent, {x: 3})
