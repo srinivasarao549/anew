@@ -36,7 +36,7 @@ The major problem with this is *instances of Game don't have their own 'objects'
     game_a.add({owner: "a"})
     game_b.add({owner: "b"})
 
-    // both objects are mofidying the prototype
+    // both objects are modifying the prototype
     // which is *not* what we'd like:
 
     // game_a.objects => [{owner: "a"}, {owner: "b"}]
