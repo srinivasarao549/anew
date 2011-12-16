@@ -2,6 +2,7 @@
 
 Javascript is a pretty nice language.  If you look at my repos, you can probably tell I like it quite a lot.  I have only *one* major gripe with the inheritance system.  Consider:
 
+```javascript
     // A simple object management tool
     function ObjectManager(){
         this.objects = []
@@ -24,9 +25,11 @@ Javascript is a pretty nice language.  If you look at my repos, you can probably
             if ( object.update ) object.update()
         })
     }
+```
 
 The major problem with this is *instances of Game don't have their own 'objects' property*. You can't use more than one instance of Game without running into serious issues:
 
+```javascript
     var game_a = new Game,
         game_b = new Game
 
@@ -38,6 +41,7 @@ The major problem with this is *instances of Game don't have their own 'objects'
 
     // game_a.objects => [{owner: "a"}, {owner: "b"}]
     // game_b.objects => [{owner: "a"}, {owner: "b"}]
+```
 
 ## API
 
@@ -45,14 +49,17 @@ The major problem with this is *instances of Game don't have their own 'objects'
 
 Anew is a single function, w/ a similar signature to Object.create:
 
+```javascript
     function anew(proto, object) // -> object 
                                  // where object[[prototype]] == proto
+```
 
 ### init methods as constructors
 
 Anew assumes that 'init' methods should act like constructors.  This is where all per-instance
 properties are to be defined, e.g.:
 
+```javascript
     var obj = anew(null, {
         init: function(){
             this.x = 3   
@@ -60,28 +67,35 @@ properties are to be defined, e.g.:
     })
 
     // obj => {init: function(){ this.x = 3  }, x: 3}
+```
 
 Init methods *anywhere* in the prototype chain will take precedence over regular object properties:
 
+```javascript
     var parent = {init: function(){ this.x = 2}},
         child = anew(parent, {x: 3})
 
     // child => {x: 2}
+```
+
 
 ### inheriting per-instance variables
 
 Inheritance in OOP works on the basis that, in the inheriting object, the 'sub' overwrites the 'super' (be it an object or class).  In the same spirit, anew will apply each init method in the prototype chain from the oldest to the newest to the return object.  The implication of this is:
 
+```javascript
     var gramps = {init: function(){ this.likes = "bridge"}},
         dad = anew(gramps, {init: function(){ this.likes = "golf"}}),
         kid = anew(dad)
     
     // kid.likes == "golf" 
+```
 
 ### Final example
 
 If we use this to 'correct' the buggy example in the intro, it'd look like this:
 
+```javascript
     var object_manager = {
         init: function(){
             this.objects = []
@@ -98,9 +112,11 @@ If we use this to 'correct' the buggy example in the intro, it'd look like this:
             })
         }
     })
+```
 
 Now, our example from above will work correctly:
 
+```javascript
     var game_a = anew(game),
         game_b = anew(game)
 
@@ -109,7 +125,7 @@ Now, our example from above will work correctly:
 
     // game_a.objects => [{owner: "a"}]
     // game_b.objects => [{owner: "b"}]
-
+```
 
 ## Compatibility
 
