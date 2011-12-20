@@ -1,4 +1,4 @@
-void function(init, root, module, exports){
+void function(init, root, module_p, exports_p){
 
     var get_proto = Object.getPrototypeOf
     
@@ -40,12 +40,12 @@ void function(init, root, module, exports){
 
 
     }
-
+    
     // export
-    if ( module && exports ) module[exports] = anew
+    if ( module_p && exports_p ) module.exports = anew
     else root["anew"] = anew
 
 }("init", 
 this,
-module,
-exports)
+typeof module != "undefined",
+typeof exports != "undefined")
