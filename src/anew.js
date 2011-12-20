@@ -1,9 +1,30 @@
-void function(init){
+void function(init, root, module, exports){
 
     var get_proto = Object.getPrototypeOf
     
     function anew(proto, object){
         
+        function mixin_object(to, from){
+            
+            function copy_key_val(key){
+                to[key] = from[key]
+            }
+
+            Object.keys(from).forEach(copy_key_val)
+        }
+        
+        function call_proto_inits(object, proto){
+            
+            if ( !proto ) proto = get_proto(object)
+            
+            if ( proto === Object.prototype ) return
+            else call_proto_inits(object, get_proto(proto)) 
+            
+            // apply while falling from stack 
+            if ( proto[init] ) proto[init].apply(object)
+        }
+
+
         void function set_defaults(){
             if ( proto === undefined ) proto = {}
             if ( object === undefined ) object = {}
@@ -18,32 +39,13 @@ void function(init){
         return return_object
 
 
-    // HELPERS
-
-
-        function mixin_object(to, from){
-            
-            Object.keys(from).forEach(function(key){
-                to[key] = from[key]
-            })
-        
-        }
-        
-        function call_proto_inits(object, proto){
-            
-            if ( !proto ) proto = get_proto(object)
-            
-            if ( proto === Object.prototype ) return
-            else call_proto_inits(object, get_proto(proto)) 
-            
-            // apply while falling from stack 
-            if ( proto[init] ) proto[init].apply(object)
-
-        }
-
     }
 
     // export
-    window["anew"] = anew
+    if ( module && exports ) module[exports] = anew
+    else root = anew
 
-}("init")
+}("init", 
+this,
+module,
+exports)
