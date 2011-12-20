@@ -9,10 +9,10 @@ void function(init, root, module_p, exports_p){
             function copy_key_val(key){
                 to[key] = from[key]
             }
-
             Object.keys(from).forEach(copy_key_val)
         }
         
+
         function call_proto_inits(object, proto){
             
             if ( !proto ) proto = get_proto(object)
@@ -37,8 +37,6 @@ void function(init, root, module_p, exports_p){
         if ( {}.hasOwnProperty.call(return_object, init) ) return_object[init]()
         
         return return_object
-
-
     }
     
     // export
