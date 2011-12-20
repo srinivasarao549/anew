@@ -43,7 +43,7 @@ void function(init, root, module, exports){
 
     // export
     if ( module && exports ) module[exports] = anew
-    else root = anew
+    else root["anew"] = anew
 
 }("init", 
 this,
