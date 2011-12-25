@@ -1,4 +1,4 @@
-void function(constructor, root, module_p, exports_p){
+void function(root, module_p, exports_p){
 
     var get_proto = Object.getPrototypeOf
     
@@ -21,7 +21,7 @@ void function(constructor, root, module_p, exports_p){
             else call_proto_constructors(object, get_proto(proto)) 
             
             // apply while falling from stack 
-            if ( proto[constructor] ) proto[constructor].apply(object)
+            if ( proto["constructor"] ) proto["constructor"].apply(object)
         }
 
 
@@ -34,7 +34,7 @@ void function(constructor, root, module_p, exports_p){
         
         mixin_object(return_object, object)
         if ( proto instanceof Object ) call_proto_constructors(return_object)
-        if ( {}.hasOwnProperty.call(return_object, constructor) ) return_object[constructor]()
+        if ( {}.hasOwnProperty.call(return_object, "constructor") ) return_object["constructor"]()
         
         return return_object
     }
@@ -43,7 +43,6 @@ void function(constructor, root, module_p, exports_p){
     if ( module_p && exports_p ) module.exports = anew
     else root["anew"] = anew
 
-}("constructor", 
-this,
+}(this,
 typeof module != "undefined",
 typeof exports != "undefined")
