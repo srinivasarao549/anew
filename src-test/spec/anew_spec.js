@@ -2,10 +2,10 @@ describe("anew", function(){
 
     describe("examples", function(){
 
-        it("init methods as constructors", function(){
+        it("constructor methods as constructors", function(){
         
             var obj = anew(null, {
-                init: function(){
+                constructor: function(){
                     this.x = 3   
                 }
             })
@@ -15,17 +15,17 @@ describe("anew", function(){
 
         it("inheritence", function(){
         
-            var gramps = {init: function(){ this.likes = "bridge"}},
-                dad = anew(gramps, {init: function(){ this.likes = "golf"}}),
+            var gramps = {constructor: function(){ this.likes = "bridge"}},
+                dad = anew(gramps, {constructor: function(){ this.likes = "golf"}}),
                 kid = anew(dad)
 
             expect(kid.likes).toEqual("golf")
-            expect(kid.init).toBe(dad.init)
+            expect(kid.constructor).toBe(dad.constructor)
         })
     
-        it("init takes precedence over mixin object", function(){
+        it("constructor takes precedence over mixin object", function(){
             
-            var parent = {init: function(){ this.x = 2}},
+            var parent = {constructor: function(){ this.x = 2}},
                 child = anew(parent, {x: 3})
 
             expect(child.x).toEqual(2)
@@ -34,7 +34,7 @@ describe("anew", function(){
         it("main example", function(){
         
             var object_manager = {
-                init: function(){
+                constructor: function(){
                     this.objects = []
                 },
                 add: function(object){

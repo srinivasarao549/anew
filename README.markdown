@@ -54,25 +54,25 @@ Anew is a single function, w/ a similar signature to Object.create:
                                  // where object[[prototype]] == proto
 ```
 
-### init methods as constructors
+### constructor methods as constructors
 
-Anew assumes that 'init' methods should act like constructors.  This is where all per-instance
+Anew assumes that 'constructor' methods should act like constructors.  This is where all per-instance
 properties are to be defined, e.g.:
 
 ```javascript
     var obj = anew(null, {
-        init: function(){
+        constructor: function(){
             this.x = 3   
         }
     })
 
-    // obj => {init: function(){ this.x = 3  }, x: 3}
+    // obj => {constructor: function(){ this.x = 3  }, x: 3}
 ```
 
 Init methods *anywhere* in the prototype chain will take precedence over regular object properties:
 
 ```javascript
-    var parent = {init: function(){ this.x = 2}},
+    var parent = {constructor: function(){ this.x = 2}},
         child = anew(parent, {x: 3})
 
     // child => {x: 2}
@@ -81,11 +81,11 @@ Init methods *anywhere* in the prototype chain will take precedence over regular
 
 ### inheriting per-instance variables
 
-Inheritance in OOP works on the basis that, in the inheriting object, the 'sub' overwrites the 'super' (be it an object or class).  In the same spirit, anew will apply each init method in the prototype chain from the oldest to the newest to the return object.  The implication of this is:
+Inheritance in OOP works on the basis that, in the inheriting object, the 'sub' overwrites the 'super' (be it an object or class).  In the same spirit, anew will apply each constructor method in the prototype chain from the oldest to the newest to the return object.  The implication of this is:
 
 ```javascript
-    var gramps = {init: function(){ this.likes = "bridge"}},
-        dad = anew(gramps, {init: function(){ this.likes = "golf"}}),
+    var gramps = {constructor: function(){ this.likes = "bridge"}},
+        dad = anew(gramps, {constructor: function(){ this.likes = "golf"}}),
         kid = anew(dad)
     
     // kid.likes == "golf" 
@@ -97,7 +97,7 @@ If we use this to 'correct' the buggy example in the intro, it'd look like this:
 
 ```javascript
     var object_manager = {
-        init: function(){
+        constructor: function(){
             this.objects = []
         },
         add: function(object){
