@@ -25,11 +25,11 @@ void function(init, root, module_p, exports_p){
         }
 
 
-        void function set_defaults(){
-            if ( proto === undefined ) proto = {}
-            if ( object === undefined ) object = {}
-        }()
+        // defaults 
+        if ( proto === undefined ) proto = {}
+        if ( object === undefined ) object = {}
 
+        // logic
         var return_object = Object.create(proto)
         
         mixin_object(return_object, object)
