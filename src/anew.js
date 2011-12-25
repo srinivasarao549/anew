@@ -1,9 +1,23 @@
-void function(root, module_p, exports_p){
+void function(root, module_p){
 
     var get_proto = Object.getPrototypeOf
     
     function anew(proto, object){
         
+        // defaults 
+        if ( proto === undefined ) proto = {}
+        if ( object === undefined ) object = {}
+
+        // logic
+        var return_object = Object.create(proto)
+        
+        mixin_object(return_object, object)
+        if ( proto instanceof Object ) call_proto_constructors(return_object)
+        if ( {}.hasOwnProperty.call(return_object, "constructor") ) return_object["constructor"]()
+        
+        return return_object
+
+        // helpers 
         function mixin_object(to, from){
             
             function copy_key_val(key){
@@ -23,26 +37,11 @@ void function(root, module_p, exports_p){
             // apply while falling from stack 
             if ( proto["constructor"] ) proto["constructor"].apply(object)
         }
-
-
-        // defaults 
-        if ( proto === undefined ) proto = {}
-        if ( object === undefined ) object = {}
-
-        // logic
-        var return_object = Object.create(proto)
-        
-        mixin_object(return_object, object)
-        if ( proto instanceof Object ) call_proto_constructors(return_object)
-        if ( {}.hasOwnProperty.call(return_object, "constructor") ) return_object["constructor"]()
-        
-        return return_object
     }
     
     // export
-    if ( module_p && exports_p ) module.exports = anew
+    if ( module_p ) module.exports = anew
     else root["anew"] = anew
 
 }(this,
-typeof module != "undefined",
-typeof exports != "undefined")
+typeof module != "undefined")
