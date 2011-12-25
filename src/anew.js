@@ -1,6 +1,9 @@
 void function(root, module_p){
 
-    var get_proto = Object.getPrototypeOf
+    var get_proto = Object.getPrototypeOf,
+        has_own_prop = Function.prototype.call.bind(Object.prototype.hasOwnProperty)
+
+    console.log()
     
     function anew(proto, object){
         
@@ -13,7 +16,7 @@ void function(root, module_p){
         
         mixin_object(return_object, object)
         if ( proto instanceof Object ) call_proto_constructors(return_object)
-        if ( {}.hasOwnProperty.call(return_object, "constructor") ) return_object["constructor"]()
+        if ( has_own_prop(return_object, "constructor") ) return_object["constructor"]()
         
         return return_object
 
@@ -35,7 +38,7 @@ void function(root, module_p){
             else call_proto_constructors(object, get_proto(proto)) 
             
             // apply while falling from stack 
-            if ( proto["constructor"] ) proto["constructor"].apply(object)
+            if ( proto["constructor"] ) proto["constructor"].call(object)
         }
     }
     
