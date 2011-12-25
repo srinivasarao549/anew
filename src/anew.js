@@ -3,7 +3,6 @@ void function(root, module_p){
     var get_proto = Object.getPrototypeOf,
         has_own_prop = Function.prototype.call.bind(Object.prototype.hasOwnProperty)
 
-    console.log()
     
     function anew(proto, object){
         
