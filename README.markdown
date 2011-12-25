@@ -68,14 +68,6 @@ Anew assumes that 'constructor' methods should be called on inheriting and appli
     // obj => {constructor: function(){ this.x = 3  }, x: 3}
 ```
 
-Constructor methods *anywhere* in the prototype chain will take precedence over regular object properties:
-
-```javascript
-    var parent = {constructor: function(){ this.x = 2}},
-        child = anew(parent, {x: 3})
-
-    // child => {x: 2}
-```
 
 
 ### inheriting per-instance variables
@@ -88,6 +80,16 @@ Inheritance in OOP works on the basis that, in the inheriting object, the 'sub' 
         kid = anew(dad)
     
     // kid.likes == "golf" 
+```
+
+
+Constructor methods *anywhere* in the prototype chain will take precedence over regular object properties:
+
+```javascript
+    var parent = {constructor: function(){ this.x = 2}},
+        child = anew(parent, {x: 3})
+
+    // child => {x: 2}
 ```
 
 ### Final example
