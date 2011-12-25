@@ -54,10 +54,9 @@ Anew is a single function, w/ a similar signature to Object.create:
                                  // where object[[prototype]] == proto
 ```
 
-### constructor methods as constructors
+###  constructors
 
-Anew assumes that 'constructor' methods should act like constructors.  This is where all per-instance
-properties are to be defined, e.g.:
+Anew assumes that 'constructor' methods should be called on inheriting and applied to the new object instance.  This is where all per-instance properties are to be defined, e.g.:
 
 ```javascript
     var obj = anew(null, {
@@ -69,7 +68,7 @@ properties are to be defined, e.g.:
     // obj => {constructor: function(){ this.x = 3  }, x: 3}
 ```
 
-Init methods *anywhere* in the prototype chain will take precedence over regular object properties:
+Constructor methods *anywhere* in the prototype chain will take precedence over regular object properties:
 
 ```javascript
     var parent = {constructor: function(){ this.x = 2}},
