@@ -56,7 +56,7 @@ Anew is a single function, w/ a similar signature to Object.create:
 
 ###  constructors
 
-Anew assumes that 'constructor' methods should be called on inheriting and applied to the new object instance.  This is where all per-instance properties are to be defined, e.g.:
+Anew assumes that 'constructor' methods should be called on the object submitted to it.  This is where all per-instance properties are to be defined, e.g.:
 
 ```javascript
     var obj = anew(null, {

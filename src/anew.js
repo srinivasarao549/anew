@@ -1,9 +1,9 @@
-void function(root, module_p){
+void function(root){
 
     var get_proto = Object.getPrototypeOf,
         has_own_prop = Function.prototype.call.bind(Object.prototype.hasOwnProperty)
-
     
+
     function anew(proto, object){
         
         // defaults 
@@ -42,8 +42,9 @@ void function(root, module_p){
     }
     
     // export
-    if ( module_p ) module.exports = anew
-    else root["anew"] = anew
+    if ( typeof module !== "undefined" && module.exports ) 
+        module.exports = anew
+    else 
+        root["anew"] = anew
 
-}(this,
-typeof module != "undefined")
+}(this)
