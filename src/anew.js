@@ -22,10 +22,12 @@ void function(root){
         // helpers 
         function mixin_object(to, from){
             
-            function copy_key_val(key){
-                to[key] = from[key]
-            }
             Object.keys(from).forEach(copy_key_val)
+            
+            function copy_key_val(key){
+                to[key] = from[key] 
+            }
+        
         }
         
 
