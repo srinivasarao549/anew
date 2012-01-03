@@ -60,7 +60,23 @@ describe("anew", function(){
             expect(game_b.objects).toEqual([{owner: "b"}])
         })
 
+    })
 
+    describe("edge cases", function(){
+        
+        it("must only add own properties on the mixin", function(){
+            var parent_obj = {x: 4},        // this should be ignored
+                mixin_obj = Object.create(parent_obj)
+            
+            mixin_obj.y = true
+            
+            var obj = anew({}, mixin_obj)
+            
+
+            expect(obj.y).toEqual(true)
+            expect(obj.x).toEqual(undefined)    
+        })
+    
     })
 
 })
